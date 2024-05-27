@@ -5,18 +5,16 @@ param (
 	[string]$WebAppName = "test2-pwsh-mn2705"
 )
 
-try {	
-	# Check for Azure context
-	$context = Get-AzContext
-	if (-no $context) {
-		throw "No Azure context found, you will have to log in"
-	}
-}
-catch {
+	
+# Check for Azure context
+$context = Get-AzContext
+
+if (-no $context) {
 	# Connect if no context found
 	Write-Output "Log in prompt..."
 	Connect-AzAccount
 }
+
 
 $context = Get-AzContext
 
@@ -36,11 +34,10 @@ if ($useCurr -in "no", "n") {
 $context = Get-AzContext
 Write-Output "Proceeding with subscription $($context.Subscription.Name)"
 
-try {
-	# Checking if Resource Group exists
-	$rg = Get-AzResourceGroup -Name $ResourceGroup -ErrorAction Stop
-}
-catch {
+# Checking if Resource Group exists
+$rg = Get-AzResourceGroup -Name $ResourceGroup -ErrorAction SilentlyContinue
+
+if (-not $rg) {
 	# Prompt the user if he would like to create the Resource Group
 	$createRg = Read-Host "Resource group: $ResourceGroup does not exist, would you like to create it [YES/no]?"
 
@@ -55,30 +52,30 @@ catch {
 	}
 }
 
-Write-Output "Selected Resource Group: $($rg.name)"
+Write-Output "Selected Resource Group: $ResourceGroup"
 
+# Does not work properly!
+# Prompt the user if he would like to create the App Service Plan
+# $app_sp = Get-AzAppServicePlan -ResourceGroupName $ResourceGroup -Name $AppServicePlan -ErrorAction SilentlyContinue
 
-try {
-	# Checking if App Service Plan exists
-	$app_sp = Get-AzAppServicePlan -ResourceGroupName $ResourceGroup `
-		-Name $AppServicePlan -ErrorAction Stop
-}
-catch {
-	$create_asp = Read-Host "Selected App Service Plan: $AppServicePlan does not exist, would you like to create it [YES/no]?:"
-	
-	if ($create_asp -in "no", "n") {
-		Write-Output "Stopping..."
-		return
-	}
-	else {
-		# Create App Service Plan
-		New-AzAppServicePlan -ResourceGroupName $ResourceGroup `
-			-Name $AppServicePlan `
-			-Location $Location -Tier Free
-	}
-}
+# if (-not $app_sp) {
 
-Write-Output "Selected service plan $AppServicePlan"
+# 	# Prompt the user if he would like to create the App Service Plan
+# 	$create_asp = Read-Host "Selected App Service Plan: $AppServicePlan does not exist. Would you like to create it [YES/no]?"
+
+# 	if ($create_asp -in "no", "n") {
+# 		Write-Output "Stopping..."
+# 		return
+# 	}
+# 	else {
+# 		# Create App Service Plan
+# 		Write-Output "Creating App Service Plan..."
+# 		#This command has different location names?
+# 		New-AzAppServicePlan -ResourceGroupName $ResourceGroup -Name $AppServicePlan -Location "germanywestcentral" -Tier "Free"
+# 	}
+# }
+# return 
+# Write-Output "Selected service plan $AppServicePlan"
 
 
 try {
