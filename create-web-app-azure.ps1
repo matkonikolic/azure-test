@@ -1,15 +1,15 @@
 param (
 	[string]$ResourceGroup = "RG1",
-	[string]$Location = "Italy North",
+	[string]$Location = "Germany West Central",
 	[string]$AppServicePlan = "ASP1",
-	[string]$WebAppName = "test2-pwsh-mn2705"
+	[string]$WebAppName = "mn-pwsh-web-app"
 )
 
 	
 # Check for Azure context
 $context = Get-AzContext
 
-if (-no $context) {
+if (-not $context) {
 	# Connect if no context found
 	Write-Output "Log in prompt..."
 	Connect-AzAccount
