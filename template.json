@@ -6,27 +6,27 @@
             "type": "SecureString"
         },
         "serverfarms_ASP1_name": {
-            "defaultValue": "ASP1",
+            "defaultValue": "ASP2",
             "type": "String"
         },
         "sites_mn_web_app_1_name": {
-            "defaultValue": "mn-web-appp-1",
+            "defaultValue": "mn-web-app--1",
             "type": "String"
         },
         "sites_mn_web_app_2_name": {
-            "defaultValue": "mn-web-appp-2",
+            "defaultValue": "mn-web-app--2",
             "type": "String"
         },
         "sites_mn_web_app_3_name": {
-            "defaultValue": "mn-web-appp-3",
+            "defaultValue": "mn-web-app--3",
             "type": "String"
         },
         "sites_mn_pwsh_web_app_name": {
-            "defaultValue": "mn-pwsh-web-appp",
+            "defaultValue": "mn-pwsh-web--app",
             "type": "String"
         },
         "servers_my_sql_db_server_mn_name": {
-            "defaultValue": "my-sql-db-server-mnn",
+            "defaultValue": "my-sql-db-server--mn",
             "type": "String"
         },
         "administratorLoginPassword": {
@@ -57,12 +57,12 @@
             "type": "Microsoft.Web/serverfarms",
             "apiVersion": "2023-12-01",
             "name": "[parameters('serverfarms_ASP1_name')]",
-            "location": "Germany West Central",
+            "location": "Italy North",
             "sku": {
-                "name": "F1",
-                "tier": "Free",
-                "size": "F1",
-                "family": "F",
+                "name": "B1",
+                "tier": "Basic",
+                "size": "B1",
+                "family": "B",
                 "capacity": 1
             },
             "kind": "linux",
@@ -92,29 +92,7 @@
         },
         {
             "type": "Microsoft.Sql/servers/advisors",
-            "apiVersion": "2014-04-01",
-            "name": "[concat(parameters('servers_my_sql_db_server_mn_name'), '/CreateIndex')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers', parameters('servers_my_sql_db_server_mn_name'))]"
-            ],
-            "properties": {
-                "autoExecuteValue": "Disabled"
-            }
-        },
-        {
-            "type": "Microsoft.Sql/servers/advisors",
-            "apiVersion": "2014-04-01",
-            "name": "[concat(parameters('servers_my_sql_db_server_mn_name'), '/DbParameterization')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers', parameters('servers_my_sql_db_server_mn_name'))]"
-            ],
-            "properties": {
-                "autoExecuteValue": "Disabled"
-            }
-        },
-        {
-            "type": "Microsoft.Sql/servers/advisors",
-            "apiVersion": "2014-04-01",
+            "apiVersion": "2021-11-01",
             "name": "[concat(parameters('servers_my_sql_db_server_mn_name'), '/DefragmentIndex')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Sql/servers', parameters('servers_my_sql_db_server_mn_name'))]"
@@ -125,7 +103,7 @@
         },
         {
             "type": "Microsoft.Sql/servers/advisors",
-            "apiVersion": "2014-04-01",
+            "apiVersion": "2021-11-01",
             "name": "[concat(parameters('servers_my_sql_db_server_mn_name'), '/DropIndex')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Sql/servers', parameters('servers_my_sql_db_server_mn_name'))]"
@@ -136,7 +114,7 @@
         },
         {
             "type": "Microsoft.Sql/servers/advisors",
-            "apiVersion": "2014-04-01",
+            "apiVersion": "2021-11-01",
             "name": "[concat(parameters('servers_my_sql_db_server_mn_name'), '/ForceLastGoodPlan')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Sql/servers', parameters('servers_my_sql_db_server_mn_name'))]"
@@ -147,7 +125,7 @@
         },
         {
             "type": "Microsoft.Sql/servers/auditingPolicies",
-            "apiVersion": "2014-04-01",
+            "apiVersion": "2021-11-01",
             "name": "[concat(parameters('servers_my_sql_db_server_mn_name'), '/Default')]",
             "location": "Italy North",
             "dependsOn": [
@@ -199,7 +177,7 @@
         },
         {
             "type": "Microsoft.Sql/servers/databases/auditingPolicies",
-            "apiVersion": "2014-04-01",
+            "apiVersion": "2021-11-01",
             "name": "[concat(parameters('servers_my_sql_db_server_mn_name'), '/master/Default')]",
             "location": "Italy North",
             "dependsOn": [
@@ -372,18 +350,6 @@
             }
         },
         {
-            "type": "Microsoft.Sql/servers/keys",
-            "apiVersion": "2023-08-01-preview",
-            "name": "[concat(parameters('servers_my_sql_db_server_mn_name'), '/ServiceManaged')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers', parameters('servers_my_sql_db_server_mn_name'))]"
-            ],
-            "kind": "servicemanaged",
-            "properties": {
-                "serverKeyType": "ServiceManaged"
-            }
-        },
-        {
             "type": "Microsoft.Sql/servers/securityAlertPolicies",
             "apiVersion": "2023-08-01-preview",
             "name": "[concat(parameters('servers_my_sql_db_server_mn_name'), '/Default')]",
@@ -432,7 +398,7 @@
             "type": "Microsoft.Web/sites",
             "apiVersion": "2023-12-01",
             "name": "[parameters('sites_mn_pwsh_web_app_name')]",
-            "location": "Germany West Central",
+            "location": "Italy North",
             "dependsOn": [
                 "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_ASP1_name'))]"
             ],
@@ -486,7 +452,7 @@
             "type": "Microsoft.Web/sites",
             "apiVersion": "2023-12-01",
             "name": "[parameters('sites_mn_web_app_1_name')]",
-            "location": "Germany West Central",
+            "location": "Italy North",
             "dependsOn": [
                 "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_ASP1_name'))]"
             ],
@@ -542,7 +508,7 @@
             "type": "Microsoft.Web/sites",
             "apiVersion": "2023-12-01",
             "name": "[parameters('sites_mn_web_app_2_name')]",
-            "location": "Germany West Central",
+            "location": "Italy North",
             "dependsOn": [
                 "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_ASP1_name'))]"
             ],
@@ -598,7 +564,7 @@
             "type": "Microsoft.Web/sites",
             "apiVersion": "2023-12-01",
             "name": "[parameters('sites_mn_web_app_3_name')]",
-            "location": "Germany West Central",
+            "location": "Italy North",
             "dependsOn": [
                 "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_ASP1_name'))]"
             ],
@@ -654,7 +620,7 @@
             "type": "Microsoft.Web/sites/basicPublishingCredentialsPolicies",
             "apiVersion": "2023-12-01",
             "name": "[concat(parameters('sites_mn_pwsh_web_app_name'), '/ftp')]",
-            "location": "Germany West Central",
+            "location": "Italy North",
             "dependsOn": [
                 "[resourceId('Microsoft.Web/sites', parameters('sites_mn_pwsh_web_app_name'))]"
             ],
@@ -666,7 +632,7 @@
             "type": "Microsoft.Web/sites/basicPublishingCredentialsPolicies",
             "apiVersion": "2023-12-01",
             "name": "[concat(parameters('sites_mn_web_app_1_name'), '/ftp')]",
-            "location": "Germany West Central",
+            "location": "Italy North",
             "dependsOn": [
                 "[resourceId('Microsoft.Web/sites', parameters('sites_mn_web_app_1_name'))]"
             ],
@@ -678,7 +644,7 @@
             "type": "Microsoft.Web/sites/basicPublishingCredentialsPolicies",
             "apiVersion": "2023-12-01",
             "name": "[concat(parameters('sites_mn_web_app_2_name'), '/ftp')]",
-            "location": "Germany West Central",
+            "location": "Italy North",
             "dependsOn": [
                 "[resourceId('Microsoft.Web/sites', parameters('sites_mn_web_app_2_name'))]"
             ],
@@ -690,7 +656,7 @@
             "type": "Microsoft.Web/sites/basicPublishingCredentialsPolicies",
             "apiVersion": "2023-12-01",
             "name": "[concat(parameters('sites_mn_web_app_3_name'), '/ftp')]",
-            "location": "Germany West Central",
+            "location": "Italy North",
             "dependsOn": [
                 "[resourceId('Microsoft.Web/sites', parameters('sites_mn_web_app_3_name'))]"
             ],
@@ -702,7 +668,7 @@
             "type": "Microsoft.Web/sites/basicPublishingCredentialsPolicies",
             "apiVersion": "2023-12-01",
             "name": "[concat(parameters('sites_mn_pwsh_web_app_name'), '/scm')]",
-            "location": "Germany West Central",
+            "location": "Italy North",
             "dependsOn": [
                 "[resourceId('Microsoft.Web/sites', parameters('sites_mn_pwsh_web_app_name'))]"
             ],
@@ -714,7 +680,7 @@
             "type": "Microsoft.Web/sites/basicPublishingCredentialsPolicies",
             "apiVersion": "2023-12-01",
             "name": "[concat(parameters('sites_mn_web_app_1_name'), '/scm')]",
-            "location": "Germany West Central",
+            "location": "Italy North",
             "dependsOn": [
                 "[resourceId('Microsoft.Web/sites', parameters('sites_mn_web_app_1_name'))]"
             ],
@@ -726,7 +692,7 @@
             "type": "Microsoft.Web/sites/basicPublishingCredentialsPolicies",
             "apiVersion": "2023-12-01",
             "name": "[concat(parameters('sites_mn_web_app_2_name'), '/scm')]",
-            "location": "Germany West Central",
+            "location": "Italy North",
             "dependsOn": [
                 "[resourceId('Microsoft.Web/sites', parameters('sites_mn_web_app_2_name'))]"
             ],
@@ -738,7 +704,7 @@
             "type": "Microsoft.Web/sites/basicPublishingCredentialsPolicies",
             "apiVersion": "2023-12-01",
             "name": "[concat(parameters('sites_mn_web_app_3_name'), '/scm')]",
-            "location": "Germany West Central",
+            "location": "Italy North",
             "dependsOn": [
                 "[resourceId('Microsoft.Web/sites', parameters('sites_mn_web_app_3_name'))]"
             ],
@@ -750,7 +716,7 @@
             "type": "Microsoft.Web/sites/config",
             "apiVersion": "2023-12-01",
             "name": "[concat(parameters('sites_mn_pwsh_web_app_name'), '/web')]",
-            "location": "Germany West Central",
+            "location": "Italy North",
             "dependsOn": [
                 "[resourceId('Microsoft.Web/sites', parameters('sites_mn_pwsh_web_app_name'))]"
             ],
@@ -829,7 +795,7 @@
             "type": "Microsoft.Web/sites/config",
             "apiVersion": "2023-12-01",
             "name": "[concat(parameters('sites_mn_web_app_1_name'), '/web')]",
-            "location": "Germany West Central",
+            "location": "Italy North",
             "dependsOn": [
                 "[resourceId('Microsoft.Web/sites', parameters('sites_mn_web_app_1_name'))]"
             ],
@@ -910,7 +876,7 @@
             "type": "Microsoft.Web/sites/config",
             "apiVersion": "2023-12-01",
             "name": "[concat(parameters('sites_mn_web_app_2_name'), '/web')]",
-            "location": "Germany West Central",
+            "location": "Italy North",
             "dependsOn": [
                 "[resourceId('Microsoft.Web/sites', parameters('sites_mn_web_app_2_name'))]"
             ],
@@ -991,7 +957,7 @@
             "type": "Microsoft.Web/sites/config",
             "apiVersion": "2023-12-01",
             "name": "[concat(parameters('sites_mn_web_app_3_name'), '/web')]",
-            "location": "Germany West Central",
+            "location": "Italy North",
             "dependsOn": [
                 "[resourceId('Microsoft.Web/sites', parameters('sites_mn_web_app_3_name'))]"
             ],
@@ -1072,7 +1038,7 @@
             "type": "Microsoft.Web/sites/hostNameBindings",
             "apiVersion": "2023-12-01",
             "name": "[concat(parameters('sites_mn_pwsh_web_app_name'), '/', parameters('sites_mn_pwsh_web_app_name'), '.azurewebsites.net')]",
-            "location": "Germany West Central",
+            "location": "Italy North",
             "dependsOn": [
                 "[resourceId('Microsoft.Web/sites', parameters('sites_mn_pwsh_web_app_name'))]"
             ],
@@ -1085,7 +1051,7 @@
             "type": "Microsoft.Web/sites/hostNameBindings",
             "apiVersion": "2023-12-01",
             "name": "[concat(parameters('sites_mn_web_app_1_name'), '/', parameters('sites_mn_web_app_1_name'), '.azurewebsites.net')]",
-            "location": "Germany West Central",
+            "location": "Italy North",
             "dependsOn": [
                 "[resourceId('Microsoft.Web/sites', parameters('sites_mn_web_app_1_name'))]"
             ],
@@ -1098,7 +1064,7 @@
             "type": "Microsoft.Web/sites/hostNameBindings",
             "apiVersion": "2023-12-01",
             "name": "[concat(parameters('sites_mn_web_app_2_name'), '/', parameters('sites_mn_web_app_2_name'), '.azurewebsites.net')]",
-            "location": "Germany West Central",
+            "location": "Italy North",
             "dependsOn": [
                 "[resourceId('Microsoft.Web/sites', parameters('sites_mn_web_app_2_name'))]"
             ],
@@ -1111,7 +1077,7 @@
             "type": "Microsoft.Web/sites/hostNameBindings",
             "apiVersion": "2023-12-01",
             "name": "[concat(parameters('sites_mn_web_app_3_name'), '/', parameters('sites_mn_web_app_3_name'), '.azurewebsites.net')]",
-            "location": "Germany West Central",
+            "location": "Italy North",
             "dependsOn": [
                 "[resourceId('Microsoft.Web/sites', parameters('sites_mn_web_app_3_name'))]"
             ],
@@ -1242,7 +1208,7 @@
         },
         {
             "type": "Microsoft.Sql/servers/databases/advisors",
-            "apiVersion": "2014-04-01",
+            "apiVersion": "2021-11-01",
             "name": "[concat(parameters('servers_my_sql_db_server_mn_name'), '/DB1/CreateIndex')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Sql/servers/databases', parameters('servers_my_sql_db_server_mn_name'), 'DB1')]",
@@ -1254,7 +1220,7 @@
         },
         {
             "type": "Microsoft.Sql/servers/databases/advisors",
-            "apiVersion": "2014-04-01",
+            "apiVersion": "2021-11-01",
             "name": "[concat(parameters('servers_my_sql_db_server_mn_name'), '/DB2/CreateIndex')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Sql/servers/databases', parameters('servers_my_sql_db_server_mn_name'), 'DB2')]",
@@ -1266,7 +1232,7 @@
         },
         {
             "type": "Microsoft.Sql/servers/databases/advisors",
-            "apiVersion": "2014-04-01",
+            "apiVersion": "2021-11-01",
             "name": "[concat(parameters('servers_my_sql_db_server_mn_name'), '/DB3/CreateIndex')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Sql/servers/databases', parameters('servers_my_sql_db_server_mn_name'), 'DB3')]",
@@ -1278,7 +1244,7 @@
         },
         {
             "type": "Microsoft.Sql/servers/databases/advisors",
-            "apiVersion": "2014-04-01",
+            "apiVersion": "2021-11-01",
             "name": "[concat(parameters('servers_my_sql_db_server_mn_name'), '/DB1/DbParameterization')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Sql/servers/databases', parameters('servers_my_sql_db_server_mn_name'), 'DB1')]",
@@ -1290,7 +1256,7 @@
         },
         {
             "type": "Microsoft.Sql/servers/databases/advisors",
-            "apiVersion": "2014-04-01",
+            "apiVersion": "2021-11-01",
             "name": "[concat(parameters('servers_my_sql_db_server_mn_name'), '/DB2/DbParameterization')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Sql/servers/databases', parameters('servers_my_sql_db_server_mn_name'), 'DB2')]",
@@ -1302,7 +1268,7 @@
         },
         {
             "type": "Microsoft.Sql/servers/databases/advisors",
-            "apiVersion": "2014-04-01",
+            "apiVersion": "2021-11-01",
             "name": "[concat(parameters('servers_my_sql_db_server_mn_name'), '/DB3/DbParameterization')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Sql/servers/databases', parameters('servers_my_sql_db_server_mn_name'), 'DB3')]",
@@ -1314,7 +1280,7 @@
         },
         {
             "type": "Microsoft.Sql/servers/databases/advisors",
-            "apiVersion": "2014-04-01",
+            "apiVersion": "2021-11-01",
             "name": "[concat(parameters('servers_my_sql_db_server_mn_name'), '/DB1/DefragmentIndex')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Sql/servers/databases', parameters('servers_my_sql_db_server_mn_name'), 'DB1')]",
@@ -1326,7 +1292,7 @@
         },
         {
             "type": "Microsoft.Sql/servers/databases/advisors",
-            "apiVersion": "2014-04-01",
+            "apiVersion": "2021-11-01",
             "name": "[concat(parameters('servers_my_sql_db_server_mn_name'), '/DB2/DefragmentIndex')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Sql/servers/databases', parameters('servers_my_sql_db_server_mn_name'), 'DB2')]",
@@ -1338,7 +1304,7 @@
         },
         {
             "type": "Microsoft.Sql/servers/databases/advisors",
-            "apiVersion": "2014-04-01",
+            "apiVersion": "2021-11-01",
             "name": "[concat(parameters('servers_my_sql_db_server_mn_name'), '/DB3/DefragmentIndex')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Sql/servers/databases', parameters('servers_my_sql_db_server_mn_name'), 'DB3')]",
@@ -1350,7 +1316,7 @@
         },
         {
             "type": "Microsoft.Sql/servers/databases/advisors",
-            "apiVersion": "2014-04-01",
+            "apiVersion": "2021-11-01",
             "name": "[concat(parameters('servers_my_sql_db_server_mn_name'), '/DB1/DropIndex')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Sql/servers/databases', parameters('servers_my_sql_db_server_mn_name'), 'DB1')]",
@@ -1362,7 +1328,7 @@
         },
         {
             "type": "Microsoft.Sql/servers/databases/advisors",
-            "apiVersion": "2014-04-01",
+            "apiVersion": "2021-11-01",
             "name": "[concat(parameters('servers_my_sql_db_server_mn_name'), '/DB2/DropIndex')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Sql/servers/databases', parameters('servers_my_sql_db_server_mn_name'), 'DB2')]",
@@ -1374,7 +1340,7 @@
         },
         {
             "type": "Microsoft.Sql/servers/databases/advisors",
-            "apiVersion": "2014-04-01",
+            "apiVersion": "2021-11-01",
             "name": "[concat(parameters('servers_my_sql_db_server_mn_name'), '/DB3/DropIndex')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Sql/servers/databases', parameters('servers_my_sql_db_server_mn_name'), 'DB3')]",
@@ -1386,7 +1352,7 @@
         },
         {
             "type": "Microsoft.Sql/servers/databases/advisors",
-            "apiVersion": "2014-04-01",
+            "apiVersion": "2021-11-01",
             "name": "[concat(parameters('servers_my_sql_db_server_mn_name'), '/DB1/ForceLastGoodPlan')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Sql/servers/databases', parameters('servers_my_sql_db_server_mn_name'), 'DB1')]",
@@ -1398,7 +1364,7 @@
         },
         {
             "type": "Microsoft.Sql/servers/databases/advisors",
-            "apiVersion": "2014-04-01",
+            "apiVersion": "2021-11-01",
             "name": "[concat(parameters('servers_my_sql_db_server_mn_name'), '/DB2/ForceLastGoodPlan')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Sql/servers/databases', parameters('servers_my_sql_db_server_mn_name'), 'DB2')]",
@@ -1410,7 +1376,7 @@
         },
         {
             "type": "Microsoft.Sql/servers/databases/advisors",
-            "apiVersion": "2014-04-01",
+            "apiVersion": "2021-11-01",
             "name": "[concat(parameters('servers_my_sql_db_server_mn_name'), '/DB3/ForceLastGoodPlan')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Sql/servers/databases', parameters('servers_my_sql_db_server_mn_name'), 'DB3')]",
@@ -1422,7 +1388,7 @@
         },
         {
             "type": "Microsoft.Sql/servers/databases/auditingPolicies",
-            "apiVersion": "2014-04-01",
+            "apiVersion": "2021-11-01",
             "name": "[concat(parameters('servers_my_sql_db_server_mn_name'), '/DB1/Default')]",
             "location": "Italy North",
             "dependsOn": [
@@ -1435,7 +1401,7 @@
         },
         {
             "type": "Microsoft.Sql/servers/databases/auditingPolicies",
-            "apiVersion": "2014-04-01",
+            "apiVersion": "2021-11-01",
             "name": "[concat(parameters('servers_my_sql_db_server_mn_name'), '/DB2/Default')]",
             "location": "Italy North",
             "dependsOn": [
@@ -1448,7 +1414,7 @@
         },
         {
             "type": "Microsoft.Sql/servers/databases/auditingPolicies",
-            "apiVersion": "2014-04-01",
+            "apiVersion": "2021-11-01",
             "name": "[concat(parameters('servers_my_sql_db_server_mn_name'), '/DB3/Default')]",
             "location": "Italy North",
             "dependsOn": [
